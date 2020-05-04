@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace Agenda_Mk2
 {
@@ -18,11 +19,22 @@ namespace Agenda_Mk2
         Clase tarea = new Clase();
         List<Clase> tareas = new List<Clase>();
 
-        private String asignatura; //Variable para almacenar la asignatura de la que queremos crear una tarea. 
+        public String asignatura; //Variable para almacenar la asignatura de la que queremos crear una tarea. 
+        public int id=0;
+
+        public MySqlConnection conexion;
 
         public Principal()
         {
             InitializeComponent();
+
+            MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder();
+            builder.Server = "localhost";
+            builder.UserID = "root";
+            builder.Password = "";
+            builder.Database = "agenda";
+
+            conexion = new MySqlConnection(builder.ToString());
         }
 
         private void llenarDGV() //Metodo para llenar el DataGripView con la informacion que le proporcionamos.
@@ -53,17 +65,20 @@ namespace Agenda_Mk2
         private void btnNuevaTarea_Click(object sender, EventArgs e)
         { 
             asignatura = (String)cbAsignaturas.SelectedItem; //guarda la asignatura seleccionada en esta variable publica para poder ser tomada en el form3
+            id++;
             form3 = new NuevaTarea(this);//Llama al form2 y lo muestra en pantalla
             if (form3.ShowDialog() == DialogResult.OK)//condicion que queda a la espera de que en el form3 se active la orden de DialogResult y poder rellenar, en condicion a la clase, la lista y ser mostrada en el DataGripView
             {
                 tarea = new Clase();
 
+                tarea.Identificador = id;
                 tarea.Fecha = form3.fecha;
                 tarea.Descripcion = form3.descripcion;
                 tarea.Asignatura = asignatura;
 
                 tareas.Add(tarea);
                 llenarDGV();
+
             }
             btnEliminarTarea.Enabled = true; //Habilitado la opcion de eliminar una tarea
         }
@@ -76,6 +91,11 @@ namespace Agenda_Mk2
             {
                 btnEliminarTarea.Enabled = false;//Deshabilita la opcion de poder eliminar tareas cuando ya no hay tareas registradas en el list.
             }
+        }
+
+        private void generarIdentificador()
+        {
+            
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace Agenda_Mk2
 {
@@ -16,7 +17,6 @@ namespace Agenda_Mk2
 
         public String fecha;
         public String descripcion;
-        public String asignatura;
         private String fechaHoy = DateTime.Now.ToShortDateString();
 
         public NuevaTarea(Principal p)//referencia al form Principal
@@ -31,11 +31,13 @@ namespace Agenda_Mk2
             {
                 fecha = mtbFecha.Text;
                 comprobar(); //metodo para determinar si se ha rellenado el textbox de descripcion y poder continuar con los registros.
+                llenarTareasBases();
             }
             else
             {
                 fecha = fechaHoy;
                 comprobar();
+                llenarTareasBases();
             }
             
         }
@@ -58,6 +60,20 @@ namespace Agenda_Mk2
         private void btnHoy_Click(object sender, EventArgs e)
         {
             mtbFecha.Text = fechaHoy; //boton para asignar la fecha al dia actual en caso de que quieras
+        }
+
+        private void llenarTareasBases()
+        {
+            form1.conexion.Open();
+            String consulta = "insert into tareas values(" + form1.id
+                + ",'" + mtbFecha.Text
+                + "','" + tbDescripcion.Text
+                + "','" + form1.asignatura + "'); ";
+            MySqlCommand cmd = new MySqlCommand(consulta, form1.conexion);
+            cmd.ExecuteNonQuery();
+
+            form1.conexion.Close();
+            MessageBox.Show("fila insertada");
         }
     }
 }

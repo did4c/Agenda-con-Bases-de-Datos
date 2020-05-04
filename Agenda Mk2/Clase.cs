@@ -8,6 +8,7 @@ namespace Agenda_Mk2
 {
     public class Clase
     {
+        private int identificador;
         private String fecha;
         private String descripcion;
         private String asignatura;
@@ -15,5 +16,6 @@ namespace Agenda_Mk2
         public string Fecha { get => fecha; set => fecha = value; }
         public string Descripcion { get => descripcion; set => descripcion = value; }
         public string Asignatura { get => asignatura; set => asignatura = value; }
+        public int Identificador { get => identificador; set => identificador = value; }
     }
 }
