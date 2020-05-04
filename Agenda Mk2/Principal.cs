@@ -35,6 +35,17 @@ namespace Agenda_Mk2
             builder.Database = "agenda";
 
             conexion = new MySqlConnection(builder.ToString());
+
+            llenardatagrid();
+        }
+
+        private void llenardatagrid()
+        {
+            MySqlCommand cm = new MySqlCommand("select * from tareas;", conexion);
+            MySqlDataAdapter da = new MySqlDataAdapter(cm);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            dgvTareas.DataSource = dt;
         }
 
         private void llenarDGV() //Metodo para llenar el DataGripView con la informacion que le proporcionamos.
