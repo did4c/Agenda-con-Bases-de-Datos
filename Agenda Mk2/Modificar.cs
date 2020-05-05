@@ -33,7 +33,6 @@ namespace Agenda_Mk2
             this.Close();
 
             form1.llenardatagrid();
-            form1.Show();
         }
     }
 }

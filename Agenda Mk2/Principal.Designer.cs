@@ -91,7 +91,6 @@
             // 
             // btnEliminarTarea
             // 
-            this.btnEliminarTarea.Enabled = false;
             this.btnEliminarTarea.Location = new System.Drawing.Point(372, 348);
             this.btnEliminarTarea.Name = "btnEliminarTarea";
             this.btnEliminarTarea.Size = new System.Drawing.Size(144, 35);

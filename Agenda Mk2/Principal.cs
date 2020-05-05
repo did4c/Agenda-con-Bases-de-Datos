@@ -97,13 +97,22 @@ namespace Agenda_Mk2
 
         private void btnEliminarTarea_Click(object sender, EventArgs e)
         {
-           /* tareas.RemoveAt(dgvTareas.CurrentRow.Index);*/ //Elimina una tarea del list
-            /*llenarDGV();*///Se actualiza esa eliminacion realizada por pantalla
+            /* tareas.RemoveAt(dgvTareas.CurrentRow.Index);*/ //Elimina una tarea del list
+                                                              /*llenarDGV();*///Se actualiza esa eliminacion realizada por pantalla
+                                                                              //if (tareas.Count == 0)
+                                                                              //{
+                                                                              //    btnEliminarTarea.Enabled = false;//Deshabilita la opcion de poder eliminar tareas cuando ya no hay tareas registradas en el list.
+                                                                              //}
+
+            identificador = dgvTareas.CurrentRow.Cells["identificador"].Value.ToString();
+
+            conexion.Open();
+            String actualizar = "delete from tareas where identificador='" + identificador + "'";
+            MySqlCommand cmd = new MySqlCommand(actualizar, conexion);
+            cmd.ExecuteNonQuery();
+
+            conexion.Close();
             llenardatagrid();
-            //if (tareas.Count == 0)
-            //{
-            //    btnEliminarTarea.Enabled = false;//Deshabilita la opcion de poder eliminar tareas cuando ya no hay tareas registradas en el list.
-            //}
         }
 
         public void generarIdentificador() //genera el id correspondiente a la tarea nueva o modificada
