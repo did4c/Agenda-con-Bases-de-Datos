@@ -35,6 +35,7 @@
             this.btnNuevaTarea = new System.Windows.Forms.Button();
             this.btnEliminarTarea = new System.Windows.Forms.Button();
             this.dgvTareas = new System.Windows.Forms.DataGridView();
+            this.btnModificar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTareas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -108,11 +109,22 @@
             this.dgvTareas.Size = new System.Drawing.Size(478, 193);
             this.dgvTareas.TabIndex = 15;
             // 
+            // btnModificar
+            // 
+            this.btnModificar.Location = new System.Drawing.Point(60, 348);
+            this.btnModificar.Name = "btnModificar";
+            this.btnModificar.Size = new System.Drawing.Size(135, 35);
+            this.btnModificar.TabIndex = 16;
+            this.btnModificar.Text = "MODIFICAR TAREA";
+            this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(765, 429);
+            this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.dgvTareas);
             this.Controls.Add(this.btnEliminarTarea);
             this.Controls.Add(this.btnNuevaTarea);
@@ -137,6 +149,7 @@
         private System.Windows.Forms.Button btnNuevaTarea;
         private System.Windows.Forms.Button btnEliminarTarea;
         public System.Windows.Forms.DataGridView dgvTareas;
+        private System.Windows.Forms.Button btnModificar;
     }
 }
 

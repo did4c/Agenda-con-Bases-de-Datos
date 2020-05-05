@@ -92,6 +92,7 @@
             this.btnAceptarTarea.TabIndex = 17;
             this.btnAceptarTarea.Text = "ACEPTAR";
             this.btnAceptarTarea.UseVisualStyleBackColor = true;
+            this.btnAceptarTarea.Click += new System.EventHandler(this.btnAceptarTarea_Click);
             // 
             // label3
             // 
@@ -134,12 +135,12 @@
         #endregion
 
         private System.Windows.Forms.Button btnHoy;
-        private System.Windows.Forms.MaskedTextBox mtbFecha;
-        private System.Windows.Forms.TextBox tbDescripcion;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnAceptarTarea;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cbAsignaturas;
+        public System.Windows.Forms.MaskedTextBox mtbFecha;
+        public System.Windows.Forms.TextBox tbDescripcion;
+        public System.Windows.Forms.ComboBox cbAsignaturas;
     }
 }

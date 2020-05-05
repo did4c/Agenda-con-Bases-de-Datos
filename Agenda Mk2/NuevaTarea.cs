@@ -29,14 +29,16 @@ namespace Agenda_Mk2
         {
             if (mtbFecha.Text != "  /  /") //si se deja vacia la fecha, automaticamente te pone el dia actual. De lo contrario puedes añadir la fecha que quieras
             {
-                fecha = mtbFecha.Text;
+                //fecha = mtbFecha.Text;
                 comprobar(); //metodo para determinar si se ha rellenado el textbox de descripcion y poder continuar con los registros.
+                form1.generarIdentificador();
                 llenarTareasBases();
             }
             else
             {
-                fecha = fechaHoy;
+                mtbFecha.Text = fechaHoy;
                 comprobar();
+                form1.generarIdentificador();
                 llenarTareasBases();
             }
             
