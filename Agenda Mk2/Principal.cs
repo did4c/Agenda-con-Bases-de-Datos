@@ -17,11 +17,9 @@ namespace Agenda_Mk2
         NuevaTarea form3;
         Modificar form4;
 
-        //Clase tarea = new Clase();
-        //List<Clase> tareas = new List<Clase>();
-
         public String asignatura, identificador; //Variable para almacenar la asignatura de la que queremos crear una tarea. 
-        public int id;
+        public int id, conTareas;
+        public bool a = false;
 
         public MySqlConnection conexion;
 
@@ -42,6 +40,7 @@ namespace Agenda_Mk2
 
         public void llenardatagrid()
         {
+            generarIdentificador();
             MySqlCommand cm = new MySqlCommand("select * from tareas;", conexion);
             MySqlDataAdapter da = new MySqlDataAdapter(cm);
             DataTable dt = new DataTable();
@@ -49,18 +48,13 @@ namespace Agenda_Mk2
             dgvTareas.DataSource = dt;
         }
 
-        //private void llenarDGV() //Metodo para llenar el DataGripView con la informacion que le proporcionamos.
-        //{
-        //    dgvTareas.DataSource = null;
-        //    dgvTareas.DataSource = tareas;
-        //}
-
         private void btnNuevaAsignatura_Click(object sender, EventArgs e)
         {//Crear asignaturas.
             form2 = new NuevaAsignatura(this);//Llama al form2 y lo muestra en pantalla
             form2.Show();
 
             btnNuevaTarea.Enabled = true; //Al añadir un asignatura, habilita la opcion de crear tareas
+            btnEliminarTarea.Enabled = true;
         }
 
         private void btnEliminarAsignatura_Click(object sender, EventArgs e)
@@ -80,39 +74,24 @@ namespace Agenda_Mk2
             form3 = new NuevaTarea(this);//Llama al form2 y lo muestra en pantalla
             if (form3.ShowDialog() == DialogResult.OK)//condicion que queda a la espera de que en el form3 se active la orden de DialogResult y poder rellenar, en condicion a la clase, la lista y ser mostrada en el DataGripView
             {
-                //tarea = new Clase();
-
-                //tarea.Identificador = id;
-                //tarea.Fecha = form3.fecha;
-                //tarea.Descripcion = form3.descripcion;
-                //tarea.Asignatura = asignatura;
-
-                //tareas.Add(tarea);
-                //llenarDGV();
                 llenardatagrid();
-
             }
             btnEliminarTarea.Enabled = true; //Habilitado la opcion de eliminar una tarea
         }
 
         private void btnEliminarTarea_Click(object sender, EventArgs e)
         {
-            /* tareas.RemoveAt(dgvTareas.CurrentRow.Index);*/ //Elimina una tarea del list
-                                                              /*llenarDGV();*///Se actualiza esa eliminacion realizada por pantalla
-                                                                              //if (tareas.Count == 0)
-                                                                              //{
-                                                                              //    btnEliminarTarea.Enabled = false;//Deshabilita la opcion de poder eliminar tareas cuando ya no hay tareas registradas en el list.
-                                                                              //}
-
             identificador = dgvTareas.CurrentRow.Cells["identificador"].Value.ToString();
 
             conexion.Open();
             String actualizar = "delete from tareas where identificador='" + identificador + "'";
             MySqlCommand cmd = new MySqlCommand(actualizar, conexion);
             cmd.ExecuteNonQuery();
-
             conexion.Close();
+            a = true;
+
             llenardatagrid();
+            btnEliminarTarea.Enabled = false;
         }
 
         public void generarIdentificador() //genera el id correspondiente a la tarea nueva o modificada
@@ -128,6 +107,23 @@ namespace Agenda_Mk2
                 id++;
             }
             MessageBox.Show(id+"");
+            res.Close();
+            conexion.Close();
+        }
+
+        public void contadorTareas() //genera el id correspondiente a la tarea nueva o modificada
+        {
+            conTareas = 1;
+            conexion.Open();
+            String consulta = "select identificador from tareas";
+            MySqlCommand cmd = new MySqlCommand(consulta, conexion);
+            MySqlDataReader res = cmd.ExecuteReader();
+            while (res.Read())
+            {
+                //conTareas= Int16.Parse(res.GetString(0));
+                conTareas++;
+            }
+            //MessageBox.Show(id+"");
             res.Close();
             conexion.Close();
         }
@@ -148,7 +144,7 @@ namespace Agenda_Mk2
                 form4.tbDescripcion.Text = res.GetString(2);
                 form4.cbAsignaturas.Text = res.GetString(3);
             }
-            MessageBox.Show(id + "");
+            //MessageBox.Show(id + "");
             res.Close();
             conexion.Close();
         }

@@ -27,20 +27,44 @@ namespace Agenda_Mk2
 
         private void btnAceptarTarea_Click(object sender, EventArgs e)
         {
-            if (mtbFecha.Text != "  /  /") //si se deja vacia la fecha, automaticamente te pone el dia actual. De lo contrario puedes añadir la fecha que quieras
+            form1.contadorTareas();
+
+            if (form1.a && form1.conTareas<=1)
             {
-                //fecha = mtbFecha.Text;
-                comprobar(); //metodo para determinar si se ha rellenado el textbox de descripcion y poder continuar con los registros.
-                form1.generarIdentificador();
-                llenarTareasBases();
+                if (mtbFecha.Text != "  /  /") //si se deja vacia la fecha, automaticamente te pone el dia actual. De lo contrario puedes añadir la fecha que quieras
+                {
+                    comprobar(); //metodo para determinar si se ha rellenado el textbox de descripcion y poder continuar con los registros.
+                    llenarTareasBasesID();
+                }
+                else
+                {
+                    mtbFecha.Text = fechaHoy;
+                    comprobar();
+                    llenarTareasBasesID();
+                }
+                form1.a = false;
             }
             else
             {
-                mtbFecha.Text = fechaHoy;
-                comprobar();
-                form1.generarIdentificador();
-                llenarTareasBases();
+                if (form1.a==false)
+                {
+                    if (mtbFecha.Text != "  /  /") 
+                    {
+                        comprobar(); 
+                        form1.generarIdentificador();
+                        llenarTareasBases();
+                    }
+                    else
+                    {
+                        mtbFecha.Text = fechaHoy;
+                        comprobar();
+                        form1.generarIdentificador();
+                        llenarTareasBases();
+                    }
+                }
             }
+
+            
             
         }
 
@@ -68,6 +92,20 @@ namespace Agenda_Mk2
         {
             form1.conexion.Open();
             String consulta = "insert into tareas values(" + form1.id
+                + ",'" + mtbFecha.Text
+                + "','" + tbDescripcion.Text
+                + "','" + form1.asignatura + "'); ";
+            MySqlCommand cmd = new MySqlCommand(consulta, form1.conexion);
+            cmd.ExecuteNonQuery();
+
+            form1.conexion.Close();
+            MessageBox.Show("fila insertada");
+        }
+
+        private void llenarTareasBasesID()
+        {
+            form1.conexion.Open();
+            String consulta = "insert into tareas values(" + form1.identificador
                 + ",'" + mtbFecha.Text
                 + "','" + tbDescripcion.Text
                 + "','" + form1.asignatura + "'); ";
