@@ -81,7 +81,7 @@
             // btnNuevaTarea
             // 
             this.btnNuevaTarea.Enabled = false;
-            this.btnNuevaTarea.Location = new System.Drawing.Point(231, 348);
+            this.btnNuevaTarea.Location = new System.Drawing.Point(164, 348);
             this.btnNuevaTarea.Name = "btnNuevaTarea";
             this.btnNuevaTarea.Size = new System.Drawing.Size(135, 35);
             this.btnNuevaTarea.TabIndex = 13;
@@ -91,7 +91,7 @@
             // 
             // btnEliminarTarea
             // 
-            this.btnEliminarTarea.Location = new System.Drawing.Point(372, 348);
+            this.btnEliminarTarea.Location = new System.Drawing.Point(446, 348);
             this.btnEliminarTarea.Name = "btnEliminarTarea";
             this.btnEliminarTarea.Size = new System.Drawing.Size(144, 35);
             this.btnEliminarTarea.TabIndex = 14;
@@ -110,7 +110,7 @@
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(60, 348);
+            this.btnModificar.Location = new System.Drawing.Point(305, 348);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(135, 35);
             this.btnModificar.TabIndex = 16;
@@ -133,6 +133,7 @@
             this.Controls.Add(this.btnNuevaAsignatura);
             this.Name = "Principal";
             this.Text = "Principal";
+            this.Load += new System.EventHandler(this.Principal_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTareas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

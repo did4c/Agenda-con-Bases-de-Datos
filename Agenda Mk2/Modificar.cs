@@ -24,7 +24,7 @@ namespace Agenda_Mk2
         private void btnAceptarTarea_Click(object sender, EventArgs e)
         {
             form1.conexion.Open();
-            String actualizar = "update tareas set fecha='" + mtbFecha.Text + "',descripcion='" + tbDescripcion.Text + "',asignatura='" + form1.asignatura + "' where identificador='" + form1.identificador + "'";
+            String actualizar = "update tareas set fecha='" + mtbFecha.Text + "',descripcion='" + tbDescripcion.Text + "',asignatura='" + cbAsignaturas.Text + "' where identificador='" + form1.identificador + "'";
             MySqlCommand cmd = new MySqlCommand(actualizar, form1.conexion);
             cmd.ExecuteNonQuery();
 
@@ -32,7 +32,7 @@ namespace Agenda_Mk2
 
             this.Close();
 
-            form1.llenardatagrid();
+            form1.llenarDGV();
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Agenda_Mk2
 
         public String asignatura, identificador; //Variable para almacenar la asignatura de la que queremos crear una tarea. 
         public int id, conTareas;
-        public bool a = false;
 
         public MySqlConnection conexion;
 
@@ -35,10 +34,11 @@ namespace Agenda_Mk2
 
             conexion = new MySqlConnection(builder.ToString());
 
-            llenardatagrid();
+            llenarDGV();
+            dgvTareas.Columns["identificador"].Visible = false;
         }
 
-        public void llenardatagrid()
+        public void llenarDGV()
         {
             generarIdentificador();
             MySqlCommand cm = new MySqlCommand("select * from tareas;", conexion);
@@ -74,7 +74,7 @@ namespace Agenda_Mk2
             form3 = new NuevaTarea(this);//Llama al form2 y lo muestra en pantalla
             if (form3.ShowDialog() == DialogResult.OK)//condicion que queda a la espera de que en el form3 se active la orden de DialogResult y poder rellenar, en condicion a la clase, la lista y ser mostrada en el DataGripView
             {
-                llenardatagrid();
+                llenarDGV();
             }
             btnEliminarTarea.Enabled = true; //Habilitado la opcion de eliminar una tarea
         }
@@ -88,10 +88,19 @@ namespace Agenda_Mk2
             MySqlCommand cmd = new MySqlCommand(actualizar, conexion);
             cmd.ExecuteNonQuery();
             conexion.Close();
-            a = true;
 
-            llenardatagrid();
-            btnEliminarTarea.Enabled = false;
+            if (conTareas <= 1)
+            {
+                contadorTareas();
+                llenarDGV();
+                btnEliminarTarea.Enabled = false;
+            }
+            else
+            {
+                contadorTareas();
+                llenarDGV();
+                ajustarID();
+            }
         }
 
         public void generarIdentificador() //genera el id correspondiente a la tarea nueva o modificada
@@ -106,14 +115,14 @@ namespace Agenda_Mk2
             {
                 id++;
             }
-            MessageBox.Show(id+"");
+            //MessageBox.Show(id+"");
             res.Close();
             conexion.Close();
         }
 
         public void contadorTareas() //genera el id correspondiente a la tarea nueva o modificada
         {
-            conTareas = 1;
+            conTareas = 0;
             conexion.Open();
             String consulta = "select identificador from tareas";
             MySqlCommand cmd = new MySqlCommand(consulta, conexion);
@@ -149,11 +158,68 @@ namespace Agenda_Mk2
             conexion.Close();
         }
 
+        private void Principal_Load(object sender, EventArgs e)
+        {
+            deshabilitarBotonEliminar();
+        }
+
+        private void deshabilitarBotonEliminar()
+        {
+            if (conTareas <= 1)
+            {
+                btnEliminarTarea.Enabled = false;
+            }
+        }
+
         private void btnModificar_Click(object sender, EventArgs e)
         {
             form4 = new Modificar(this);
             guardarInfoID();
             form4.Show();
+            deshabilitarBotonEliminar();
+        }
+
+        public void ajustarID()
+        {
+            int s=0, u=0, p=0;
+            int[] numID = new int[conTareas];
+            MessageBox.Show(conTareas+"");
+
+            contadorTareas();
+
+            conexion.Open();
+            String consulta = "select identificador from tareas";
+            MySqlCommand cmd = new MySqlCommand(consulta, conexion);
+            MySqlDataReader res = cmd.ExecuteReader();
+            while (res.Read())
+            {
+                numID[s] = Int16.Parse(res.GetString(0));
+                s++;
+            }
+            res.Close();
+            conexion.Close();
+
+            //for (int i = 0; i < numID.Length; i++)
+            //{
+            //    MessageBox.Show(""+numID[i]);
+            //}
+
+            conexion.Open();
+            while (p<=conTareas)
+            {
+                p++;
+                //MessageBox.Show("ANTIGUO: " + numID[u] + ", NUEVO: " + p);
+                String update = "update tareas set identificador='" + p + "' where identificador='"+numID[u]+"'";
+                MySqlCommand cmd2 = new MySqlCommand(update, conexion);
+                cmd2.ExecuteNonQuery();
+                //MessageBox.Show("El numero original " + numID[u] + " ha pasado a ser " + res.GetString(0) + "--------------->" + u);
+                u++;
+                if (p==numID.Length)
+                {
+                    break;
+                }
+            }
+            conexion.Close();
         }
     }
 }

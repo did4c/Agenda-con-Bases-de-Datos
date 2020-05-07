@@ -35,7 +35,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnAceptarTarea = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.cbAsignaturas = new System.Windows.Forms.ComboBox();
+            this.cbAsignaturas = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnHoy
@@ -106,10 +106,9 @@
             // 
             // cbAsignaturas
             // 
-            this.cbAsignaturas.FormattingEnabled = true;
-            this.cbAsignaturas.Location = new System.Drawing.Point(403, 324);
+            this.cbAsignaturas.Location = new System.Drawing.Point(376, 324);
             this.cbAsignaturas.Name = "cbAsignaturas";
-            this.cbAsignaturas.Size = new System.Drawing.Size(167, 21);
+            this.cbAsignaturas.Size = new System.Drawing.Size(194, 20);
             this.cbAsignaturas.TabIndex = 24;
             // 
             // Modificar
@@ -141,6 +140,6 @@
         private System.Windows.Forms.Label label3;
         public System.Windows.Forms.MaskedTextBox mtbFecha;
         public System.Windows.Forms.TextBox tbDescripcion;
-        public System.Windows.Forms.ComboBox cbAsignaturas;
+        public System.Windows.Forms.TextBox cbAsignaturas;
     }
 }

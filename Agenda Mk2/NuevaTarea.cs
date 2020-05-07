@@ -29,44 +29,20 @@ namespace Agenda_Mk2
         {
             form1.contadorTareas();
 
-            if (form1.a && form1.conTareas<=1)
+            if (mtbFecha.Text != "  /  /")
             {
-                if (mtbFecha.Text != "  /  /") //si se deja vacia la fecha, automaticamente te pone el dia actual. De lo contrario puedes añadir la fecha que quieras
-                {
-                    comprobar(); //metodo para determinar si se ha rellenado el textbox de descripcion y poder continuar con los registros.
-                    llenarTareasBasesID();
-                }
-                else
-                {
-                    mtbFecha.Text = fechaHoy;
-                    comprobar();
-                    llenarTareasBasesID();
-                }
-                form1.a = false;
+                comprobar();
+                form1.generarIdentificador();
+                llenarTareasBases();
             }
             else
             {
-                if (form1.a==false)
-                {
-                    if (mtbFecha.Text != "  /  /") 
-                    {
-                        comprobar(); 
-                        form1.generarIdentificador();
-                        llenarTareasBases();
-                    }
-                    else
-                    {
-                        mtbFecha.Text = fechaHoy;
-                        comprobar();
-                        form1.generarIdentificador();
-                        llenarTareasBases();
-                    }
-                }
+                mtbFecha.Text = fechaHoy;
+                comprobar();
+                form1.generarIdentificador();
+                llenarTareasBases();
             }
-
-            
-            
-        }
+        }  
 
         private void comprobar()
         {
@@ -99,7 +75,7 @@ namespace Agenda_Mk2
             cmd.ExecuteNonQuery();
 
             form1.conexion.Close();
-            MessageBox.Show("fila insertada");
+            //MessageBox.Show("fila insertada");
         }
 
         private void llenarTareasBasesID()
@@ -113,7 +89,7 @@ namespace Agenda_Mk2
             cmd.ExecuteNonQuery();
 
             form1.conexion.Close();
-            MessageBox.Show("fila insertada");
+            //MessageBox.Show("fila insertada");
         }
     }
 }
