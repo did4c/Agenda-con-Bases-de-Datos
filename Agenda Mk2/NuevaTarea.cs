@@ -27,20 +27,16 @@ namespace Agenda_Mk2
 
         private void btnAceptarTarea_Click(object sender, EventArgs e)
         {
-            form1.contadorTareas();
+            form1.contadorTareas(); //recuento tareas
 
-            if (mtbFecha.Text != "  /  /")
+            if (mtbFecha.Text != "  /  /") //validar si se rellena el campo de fecha o no para que la introduzca automaticamente la actual
             {
-                comprobar();
-                form1.generarIdentificador();
-                llenarTareasBases();
+                comprobar(); //comprueba si se relleno los campos
             }
             else
             {
-                mtbFecha.Text = fechaHoy;
+                mtbFecha.Text = fechaHoy; //asigna fecha automaticamente
                 comprobar();
-                form1.generarIdentificador();
-                llenarTareasBases();
             }
         }  
 
@@ -56,6 +52,8 @@ namespace Agenda_Mk2
 
                 this.DialogResult = DialogResult.OK; //envia la orden para que se active el if dentro del boton *NuevaTarea*
                 Close();
+                form1.generarIdentificador(); //asigna id correspondiente
+                llenarTareasBases(); //actualiza base y datagrid
             }
         }
 
@@ -64,24 +62,10 @@ namespace Agenda_Mk2
             mtbFecha.Text = fechaHoy; //boton para asignar la fecha al dia actual en caso de que quieras
         }
 
-        private void llenarTareasBases()
+        private void llenarTareasBases() //inserta una nueva tarea
         {
             form1.conexion.Open();
             String consulta = "insert into tareas values(" + form1.id
-                + ",'" + mtbFecha.Text
-                + "','" + tbDescripcion.Text
-                + "','" + form1.asignatura + "'); ";
-            MySqlCommand cmd = new MySqlCommand(consulta, form1.conexion);
-            cmd.ExecuteNonQuery();
-
-            form1.conexion.Close();
-            //MessageBox.Show("fila insertada");
-        }
-
-        private void llenarTareasBasesID()
-        {
-            form1.conexion.Open();
-            String consulta = "insert into tareas values(" + form1.identificador
                 + ",'" + mtbFecha.Text
                 + "','" + tbDescripcion.Text
                 + "','" + form1.asignatura + "'); ";

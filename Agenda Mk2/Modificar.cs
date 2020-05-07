@@ -13,15 +13,15 @@ namespace Agenda_Mk2
 {
     public partial class Modificar : Form
     {
-        Principal form1;
+        Principal form1; 
 
-        public Modificar(Principal p)
+        public Modificar(Principal p) //referencia al form Principal
         {
             InitializeComponent();
             form1 = p;
         }
 
-        private void btnAceptarTarea_Click(object sender, EventArgs e)
+        private void btnAceptarTarea_Click(object sender, EventArgs e) //le asigno los nuevos valores a cada celda correspondiente
         {
             form1.conexion.Open();
             String actualizar = "update tareas set fecha='" + mtbFecha.Text + "',descripcion='" + tbDescripcion.Text + "',asignatura='" + cbAsignaturas.Text + "' where identificador='" + form1.identificador + "'";
@@ -32,7 +32,7 @@ namespace Agenda_Mk2
 
             this.Close();
 
-            form1.llenarDGV();
+            form1.llenarDGV(); //actualizo base y datagrid
         }
     }
 }
